@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nydo Theme Documentation</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Load Remix Icon CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #121212;
+            color: #E0E0E0;
+            scroll-behavior: smooth;
+        }
+        /* Custom scrollbar for better aesthetics */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #111827;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #0C121F;
+            border-radius: 4px;
+        }
+        /* Highlight sections in navigation */
+        .nav-link.active {
+            background-color: #1f1f1f;
+            border-left: 4px solid #E0E0E0;
+            padding-left: 1.75rem;
+        }
+        .content-section {
+            display: none;
+        }
+        .content-section.active {
+            display: block;
+        }
+        .code-container {
+            position: relative;
+        }
+        .copy-btn {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            padding: 0;
+            background-color: transparent;
+            color: #E0E0E0;
+            border-radius: 0;
+            transition: color 0.2s;
+        }
+        .copy-btn:hover {
+            color: #E0E0E0;
+        }
+        .copy-btn i {
+            font-size: 1.25rem;
+        }
+        .code-block {
+            padding-right: 3rem; /* Add padding to prevent overlap with the copy button */
+        }
+        .alert-success {
+            background-color: #16a34a;
+            color: white;
+        }
+        .alert-error {
+            background-color: #dc2626;
+            color: white;
+        }
+    </style>
+</head>
+<body class="antialiased text-lg">
+
+    <!-- Header for Mobile -->
+    <header class="fixed top-0 left-0 w-full z-20 bg-[#121212] bg-opacity-90 backdrop-blur-sm p-4 shadow-lg md:hidden">
+        <div class="flex justify-between items-center">
+            <h1 class="text-2xl font-bold text-white">Nydo Docs</h1>
+            <button id="menu-btn" class="p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-white">
+                <i class="ri-menu-line text-2xl"></i>
+            </button>
+        </div>
+    </header>
+
+    <div class="flex flex-col md:flex-row min-h-screen pt-16 md:pt-0">
+
+        <!-- Sidebar Navigation -->
+        <aside id="sidebar" class="fixed inset-y-0 left-0 w-64 bg-[#1f1f1f] p-4 pt-20 md:pt-6 transform -translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out z-10 overflow-y-auto">
+            <h2 class="text-3xl font-bold mb-4 text-white">Documentation</h2>
+            <nav class="space-y-2 text-base">
+                <a href="#getting-started" class="nav-link flex items-center p-2 rounded-md hover:bg-[#333333] transition-colors duration-200 active">
+                    <i class="ri-file-text-line ri-xl mr-2"></i>
+                    Getting Started
+                </a>
+                <a href="#updates" class="nav-link flex items-center p-2 rounded-md hover:bg-[#333333] transition-colors duration-200">
+                    <i class="ri-loop-right-line ri-xl mr-2"></i>
+                    Updates
+                </a>
+                <a href="#changelogs" class="nav-link flex items-center p-2 rounded-md hover:bg-[#333333] transition-colors duration-200">
+                    <i class="ri-history-line ri-xl mr-2"></i>
+                    Changelogs
+                </a>
+                <a href="#about" class="nav-link flex items-center p-2 rounded-md hover:bg-[#333333] transition-colors duration-200">
+                    <i class="ri-information-line ri-xl mr-2"></i>
+                    About
+                </a>
+                <a href="#support" class="nav-link flex items-center p-2 rounded-md hover:bg-[#333333] transition-colors duration-200">
+                    <i class="ri-question-line ri-xl mr-2"></i>
+                    Support
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="flex-1 p-6 md:p-8 md:ml-64 overflow-y-auto">
+            <h1 class="text-2xl md:text-3xl font-extrabold mb-6 text-white">Nydo Theme Documentation</h1>
+            <p class="text-gray-300 mb-8 max-w-2xl text-lg">A comprehensive guide to installing and customizing the <span class="text-white">Paymenter Nydo</span> theme. This documentation covers everything from initial setup to advanced component customization.</p>
+
+            <!-- Getting Started Section -->
+            <section id="getting-started" class="content-section active">
+                <h2 class="text-2xl font-bold mb-3">Getting Started: <span class="text-white">Installation Instructions</span></h2>
+                <div class="bg-[#1f1f1f] p-6 rounded-lg shadow-xl space-y-6">
+                    <div class="space-y-6">
+                        <div class="font-medium text-lg">Download the Theme
+                            <p class="text-gray-400 text-base">Obtain the theme files (nydo) from marketplace.</p>
+                        </div>
+                        <div class="font-medium text-lg">Upload Files
+                            <p class="text-gray-400 text-base">Upload the nydo theme folder into the themes directory.</p>
+                        </div>
+                        <div class="font-medium text-lg">Locate Paymenter’s Themes Directory
+                            <p class="text-gray-400 text-base">Navigate to your Paymenter installation:</p>
+                            <div class="code-container my-4">
+                                <pre class="bg-[#333333] p-4 rounded-lg overflow-x-auto text-sm text-gray-200 code-block"><code>cd /var/www/paymenter/themes</code></pre>
+                                <button class="copy-btn">
+                                    <i class="ri-clipboard-line"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="font-medium text-lg">Build the Theme
+                            <p class="text-gray-400 text-base">Install Node.js (v18+ recommended), then build the theme:</p>
+                            <div class="code-container my-4">
+                                <pre class="bg-[#333333] p-4 rounded-lg overflow-x-auto text-sm text-gray-200 code-block"><code>curl -fsSL https://deb.nodesource.com/setup_22.x | sudo bash -
+sudo apt install -y nodejs
+cd /var/www/paymenter
+npm install
+npm run build nydo</code></pre>
+                                <button class="copy-btn">
+                                    <i class="ri-clipboard-line"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="font-medium text-lg">Enable the Theme
+                            <p class="text-gray-400 text-base">Go to your Paymenter Admin Panel → Settings → General Settings. Under Theme, select nydo, then save.</p>
+                        </div>
+                    </div>
+                    <hr class="border-gray-700">
+                    <div class="space-y-6">
+                        <h3 class="text-xl font-medium">Troubleshooting</h3>
+                        <ul class="list-disc list-inside text-gray-400 space-y-2">
+                            <li>Make sure you are using <b class="text-white">Node.js v20</b> or above.</li>
+                            <li>Check your terminal for missing dependencies or errors.</li>
+                            <li>Refer to the Nydo support channels if you encounter issues.</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Updates Section -->
+            <section id="updates" class="content-section">
+                <h2 class="text-2xl font-bold mb-3">Updates</h2>
+                <p class="text-gray-400 text-lg">Coming soon!</p>
+            </section>
+            
+            <!-- Changelogs Section -->
+            <section id="changelogs" class="content-section">
+                <h2 class="text-2xl font-bold mb-3">Changelogs</h2>
+                <p class="text-gray-400 text-lg">Coming soon!</p>
+            </section>
+
+            <!-- About Section -->
+            <section id="about" class="content-section">
+                <div class="bg-[#1f1f1f] p-6 rounded-lg shadow-xl space-y-6">
+                    <h2 class="text-2xl font-bold mb-3">About</h2>
+                    <p class="text-gray-400 text-lg">The <span class="text-white">Nydo</span> theme is a modern, minimalist dark theme for Paymenter, designed to be clean, fast, and user-friendly. It focuses on a smooth user experience and a sleek aesthetic.</p>
+                    <hr class="border-gray-700">
+                    <div>
+                        <h3 class="text-xl font-medium">Developers:</h3>
+                        <ul class="list-disc list-inside text-gray-400 space-y-2">
+                            <li><span class="text-white">Blip</span> - Lead Developer & Designer</li>
+                            <li>Your Name - Role</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Support Section -->
+            <section id="support" class="content-section">
+                <h2 class="text-2xl font-bold mb-3">Support</h2>
+                <p class="text-gray-400 text-lg mb-6">For technical assistance or questions about the <span class="text-white">Nydo</span> theme, please use the following resources:</p>
+
+                <!-- Support Cards -->
+                <div id="support-cards" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    
+                    <!-- Discord Card -->
+                    <div class="bg-[#1f1f1f] p-6 rounded-lg shadow-xl flex flex-col items-center text-center transition-transform transform hover:scale-105">
+                        <i class="ri-discord-fill text-6xl text-white mb-4"></i>
+                        <h3 class="text-xl font-bold mb-2">Discord</h3>
+                        <p class="text-gray-400 text-base mb-4">Join our community for quick help, discussions, and real-time announcements.</p>
+                        <a href="https://discord.gg/szk2aWGh" class="inline-flex items-center text-white font-medium hover:underline" target="_blank">
+                            Join Community <i class="ri-arrow-right-line ml-1"></i>
+                        </a>
+                    </div>
+                    
+                    <!-- Support Ticket Card -->
+                    <div class="bg-[#1f1f1f] p-6 rounded-lg shadow-xl flex flex-col items-center text-center transition-transform transform hover:scale-105">
+                        <i class="ri-file-list-3-line text-6xl text-white mb-4"></i>
+                        <h3 class="text-xl font-bold mb-2">Support Ticket</h3>
+                        <p class="text-gray-400 text-base mb-4">For direct and private assistance, please open a ticket on our support platform.</p>
+                        <button id="open-ticket-btn" class="inline-flex items-center text-white font-medium hover:underline">
+                            Open Ticket <i class="ri-arrow-right-line ml-1"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Support Ticket Form (Initially hidden) -->
+                <div id="support-form-container" class="hidden bg-[#1f1f1f] p-6 rounded-lg shadow-xl space-y-6">
+                    <button id="back-to-support-btn" class="text-gray-400 hover:text-white transition-colors duration-200">
+                        <i class="ri-arrow-left-line mr-2"></i>Back to Support
+                    </button>
+                    <h3 class="text-xl font-bold">Submit a Support Ticket</h3>
+                    <p class="text-gray-400 text-lg">To open a new support ticket, please provide details about your issue. For the best assistance, please include your license key, a detailed description of the problem, and any relevant error messages or screenshots.</p>
+                    <form id="support-form" action="https://formsubmit.co/mehmoodali.1337@gmail.com" method="POST" class="space-y-4">
+                        <input type="hidden" name="_subject" value="New Support Ticket from Nydo Docs">
+                        <input type="hidden" name="_captcha" value="false">
+                        <div>
+                            <label for="name" class="block text-gray-300 mb-1">Name</label>
+                            <input type="text" id="name" name="name" class="w-full p-3 rounded-md bg-[#333333] border border-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500 text-white" required>
+                        </div>
+                        <div>
+                            <label for="email" class="block text-gray-300 mb-1">Email</label>
+                            <input type="email" id="email" name="email" class="w-full p-3 rounded-md bg-[#333333] border border-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500 text-white" required>
+                        </div>
+                        <div>
+                            <label for="message" class="block text-gray-300 mb-1">Message</label>
+                            <textarea id="message" name="message" rows="6" class="w-full p-3 rounded-md bg-[#333333] border border-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500 text-white" required></textarea>
+                        </div>
+                        <button type="submit" class="w-full p-3 rounded-md bg-white text-black font-bold hover:bg-gray-200 transition-colors duration-200">
+                            Submit Ticket
+                        </button>
+                    </form>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Custom alert/message box -->
+    <div id="alert-box" class="fixed bottom-4 left-1/2 -translate-x-1/2 p-4 rounded-lg shadow-lg z-50 text-center transition-all duration-300 transform scale-0 opacity-0 bg-white text-black">
+        Code copied to clipboard!
+    </div>
+    
+    <script>
+        // Mobile menu toggle
+        const menuBtn = document.getElementById('menu-btn');
+        const sidebar = document.getElementById('sidebar');
+
+        menuBtn.addEventListener('click', () => {
+            sidebar.classList.toggle('-translate-x-full');
+        });
+
+        // Handle navigation clicks to show/hide sections
+        const navLinks = document.querySelectorAll('.nav-link');
+        const contentSections = document.querySelectorAll('.content-section');
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+
+                // Close mobile menu on click
+                if (window.innerWidth < 768) {
+                    sidebar.classList.add('-translate-x-full');
+                }
+
+                // Hide all sections and remove active class from all links
+                contentSections.forEach(section => {
+                    section.classList.remove('active');
+                });
+                navLinks.forEach(navLink => {
+                    navLink.classList.remove('active');
+                });
+
+                // Show the target section and add active class to the clicked link
+                const targetSection = document.getElementById(targetId);
+                if (targetSection) {
+                    targetSection.classList.add('active');
+                    this.classList.add('active');
+                }
+            });
+        });
+
+        // Function to copy code to clipboard and show an alert
+        function copyToClipboard(text) {
+            const tempInput = document.createElement('textarea');
+            tempInput.value = text;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempInput);
+
+            const alertBox = document.getElementById('alert-box');
+            alertBox.classList.add('scale-100', 'opacity-100');
+            setTimeout(() => {
+                alertBox.classList.remove('scale-100', 'opacity-100');
+            }, 2000);
+        }
+
+        // Add event listeners to all copy buttons
+        document.querySelectorAll('.copy-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                const codeBlock = button.previousElementSibling;
+                if (codeBlock) {
+                    copyToClipboard(codeBlock.textContent.trim());
+                }
+            });
+        });
+
+        // Support section interactivity
+        const openTicketBtn = document.getElementById('open-ticket-btn');
+        const backToSupportBtn = document.getElementById('back-to-support-btn');
+        const supportCards = document.getElementById('support-cards');
+        const supportFormContainer = document.getElementById('support-form-container');
+
+        if (openTicketBtn && supportCards && supportFormContainer) {
+            openTicketBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                supportCards.classList.add('hidden');
+                supportFormContainer.classList.remove('hidden');
+            });
+        }
+
+        if (backToSupportBtn && supportCards && supportFormContainer) {
+            backToSupportBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                supportFormContainer.classList.add('hidden');
+                supportCards.classList.remove('hidden');
+            });
+        }
+
+        // Initialize the page by showing the first section
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelector('.nav-link.active').click();
+        });
+    </script>
+</body>
+</html>
