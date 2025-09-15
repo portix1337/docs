@@ -3,415 +3,625 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nydo Theme Documentation</title>
-    <!-- Load Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Load Remix Icon CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet">
+    <title>Nydo Theme for Paymenter - Official Documentation</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #121212;
-            color: #E0E0E0;
+        /*
+         * CORE CSS STYLES FOR THE NYDO THEME DOCS (V6)
+         */
+
+        /* --- Color Palette & Variables --- */
+        :root {
+            --nydo-primary: #5a7bfb;          
+            --nydo-dark-bg: #0d101a;          
+            --nydo-surface: #1a1e28;          
+            --nydo-text: #eef2f5;             
+            --nydo-text-secondary: #9aa5b1;   
+            --nydo-border: #2c323f;           
+            --nydo-code-bg: #1f232e;          
+            --nydo-hover-bg: #2a303f;         
+            --nydo-link: var(--nydo-primary);
+            --nydo-shadow-light: rgba(0, 0, 0, 0.2);
+            --nydo-shadow-medium: rgba(0, 0, 0, 0.4);
+            --nydo-shadow-dark: rgba(0, 0, 0, 0.6);
+        }
+
+        /* --- Global Styles --- */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
             scroll-behavior: smooth;
         }
-        /* Custom scrollbar for better aesthetics */
-        ::-webkit-scrollbar {
-            width: 8px;
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--nydo-dark-bg);
+            color: var(--nydo-text);
+            line-height: 1.6;
+            transition: background-color 0.3s, color 0.3s;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
-        ::-webkit-scrollbar-track {
-            background: #111827;
+
+        .layout {
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            gap: 2rem;
+            padding: 2rem;
+            min-height: 100vh;
         }
-        ::-webkit-scrollbar-thumb {
-            background: #0C121F;
+
+        /* --- Mobile Layout (Hamburger Menu) --- */
+        .sidebar {
+            background-color: var(--nydo-surface);
+            padding: 2.5rem 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px var(--nydo-shadow-medium);
+            border: 1px solid var(--nydo-border);
+            position: sticky;
+            top: 2rem;
+            height: calc(100vh - 4rem);
+            overflow-y: auto;
+            z-index: 100;
+            transition: transform 0.3s ease-in-out;
+        }
+        
+        .main-content {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: var(--nydo-surface);
+            color: var(--nydo-text);
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid var(--nydo-border);
+            cursor: pointer;
+            z-index: 200;
+        }
+
+        @media (max-width: 1024px) {
+            .layout {
+                grid-template-columns: 1fr;
+                padding: 1rem;
+                gap: 1rem;
+            }
+            .sidebar {
+                position: fixed;
+                top: 0;
+                left: 0;
+                transform: translateX(-110%);
+                height: 100%;
+                width: 280px;
+                padding: 5rem 1.5rem;
+                border-radius: 0;
+                border: none;
+                box-shadow: 2px 0 8px var(--nydo-shadow-dark);
+            }
+            .sidebar.open {
+                transform: translateX(0);
+            }
+            .menu-toggle {
+                display: block;
+            }
+            .main-content.dimmed {
+                filter: brightness(0.5);
+                pointer-events: none;
+            }
+        }
+
+        /* --- Sidebar & Navigation --- */
+        .logo {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--nydo-primary);
+            margin-bottom: 2.5rem;
+            display: flex;
+            align-items: center;
+            letter-spacing: -0.05em;
+        }
+
+        .logo img {
+            width: 40px;
+            height: 40px;
+            margin-right: 1rem;
+            border-radius: 6px;
+        }
+        
+        .nav-section-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--nydo-text-secondary);
+            margin-top: 2rem;
+            margin-bottom: 0.75rem;
+            padding-left: 0.5rem;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            color: var(--nydo-text);
+            text-decoration: none;
+            padding: 0.85rem 1rem;
+            border-radius: 8px;
+            margin-bottom: 0.35rem;
+            transition: background-color 0.2s ease, color 0.2s ease, transform 0.1s ease-out;
+            font-weight: 500;
+            border: 1px solid transparent;
+        }
+
+        .nav-item .fa-solid {
+            margin-right: 1rem;
+            width: 1.25rem;
+            text-align: center;
+            color: var(--nydo-text-secondary);
+            transition: color 0.2s ease;
+        }
+
+        .nav-item:hover {
+            background-color: var(--nydo-hover-bg);
+            color: var(--nydo-primary);
+            transform: translateX(3px);
+            border-color: var(--nydo-primary);
+        }
+        
+        .nav-item.active {
+            background-color: var(--nydo-primary);
+            color: var(--nydo-dark-bg);
+            font-weight: 600;
+            box-shadow: 0 4px 10px var(--nydo-shadow-medium);
+            border-color: var(--nydo-primary);
+        }
+        
+        .nav-item.active .fa-solid {
+            color: var(--nydo-dark-bg);
+        }
+
+        /* --- Main Content Area --- */
+        #content-container {
+            flex-grow: 1;
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 3rem;
+            background-color: var(--nydo-surface);
+            border-radius: 12px;
+            border: 1px solid var(--nydo-border);
+            box-shadow: 0 4px 15px var(--nydo-shadow-medium);
+        }
+        
+        h1, h2, h3, h4 {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--nydo-primary);
+            margin-top: 2.5rem;
+            margin-bottom: 1.25rem;
+            font-weight: 700;
+            line-height: 1.2;
+            letter-spacing: -0.03em;
+        }
+        
+        h1 { font-size: 2.8rem; margin-top: 0; }
+        h2 { font-size: 2.2rem; }
+        h3 { font-size: 1.7rem; }
+        h4 { font-size: 1.3rem; margin-bottom: 1rem; }
+
+        p, ul, ol, li {
+            font-size: 1.05rem;
+            color: var(--nydo-text);
+            margin-bottom: 1rem;
+        }
+        
+        ul, ol {
+            padding-left: 1.5rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+        }
+
+        strong {
+            color: var(--nydo-primary);
+        }
+        
+        a {
+            color: var(--nydo-link);
+            text-decoration: none;
+            transition: color 0.2s ease;
+            font-weight: 500;
+        }
+        
+        a:hover {
+            text-decoration: underline;
+            color: var(--nydo-primary);
+        }
+        
+        /* --- Code Blocks & Syntax Highlighting --- */
+        pre {
+            background-color: var(--nydo-code-bg);
+            border: 1px solid var(--nydo-border);
+            border-radius: 10px;
+            padding: 1.5rem;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            margin: 2rem 0;
+            line-height: 1.4;
+            position: relative;
+            font-size: 0.95rem;
+            box-shadow: 0 4px 15px var(--nydo-shadow-medium);
+        }
+
+        code {
+            font-family: 'Fira Code', 'JetBrains Mono', 'Courier New', monospace;
+            background-color: var(--nydo-code-bg);
+            padding: 0.2em 0.4em;
             border-radius: 4px;
         }
-        /* Highlight sections in navigation */
-        .nav-link.active {
-            background-color: #1f1f1f;
-            border-left: 4px solid #E0E0E0;
-            padding-left: 1.75rem;
-        }
-        .content-section {
-            display: none;
-        }
-        .content-section.active {
-            display: block;
-        }
-        .code-container {
-            position: relative;
-        }
-        .copy-btn {
-            position: absolute;
-            top: 0.5rem;
-            right: 0.5rem;
+
+        pre code {
             padding: 0;
             background-color: transparent;
-            color: #E0E0E0;
-            border-radius: 0;
-            transition: color 0.2s;
+            display: block;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--nydo-text);
+            border: none;
+            padding: 0.5em 0.8em;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.8em;
+            transition: background-color 0.2s, color 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.5em;
         }
         .copy-btn:hover {
-            color: #E0E0E0;
+            background-color: rgba(255, 255, 255, 0.2);
+            color: var(--nydo-primary);
         }
-        .copy-btn i {
-            font-size: 1.25rem;
+        .copy-btn.copied {
+            background-color: var(--nydo-primary);
+            color: var(--nydo-dark-bg);
         }
-        .code-block {
-            padding-right: 3rem; /* Add padding to prevent overlap with the copy button */
+
+        /* --- Tables --- */
+        .table-container {
+            overflow-x: auto;
+            margin: 2rem 0;
+            border: 1px solid var(--nydo-border);
+            border-radius: 8px;
+            box-shadow: 0 4px 10px var(--nydo-shadow-light);
         }
-        .alert-success {
-            background-color: #16a34a;
-            color: white;
+
+        .docs-table {
+            width: 100%;
+            border-collapse: collapse;
         }
-        .alert-error {
-            background-color: #dc2626;
-            color: white;
+        
+        .docs-table th, .docs-table td {
+            text-align: left;
+            padding: 1rem 1.25rem;
+            border-bottom: 1px solid var(--nydo-border);
         }
-        .note-box {
-            border-left: 4px solid #3B82F6;
-            background-color: #1F2937;
-            padding: 1rem;
-            border-radius: 0.5rem;
-            color: #D1D5DB;
-        }
-        .winscp-link {
-            display: inline-flex;
-            align-items: center;
-            color: #E5E7EB;
+        
+        .docs-table th {
+            background-color: var(--nydo-surface);
             font-weight: 600;
-            text-decoration: underline;
+            color: var(--nydo-text-secondary);
+            text-transform: uppercase;
+            font-size: 0.9em;
+            letter-spacing: 0.05em;
         }
-        .winscp-link i {
-            margin-left: 0.25rem;
+        
+        .docs-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* --- Alert/Info Boxes --- */
+        .alert {
+            padding: 1.5rem;
+            border-left: 5px solid var(--nydo-primary);
+            border-radius: 8px;
+            background-color: rgba(90, 123, 251, 0.12);
+            margin: 2.5rem 0;
+            box-shadow: 0 2px 10px var(--nydo-shadow-light);
+        }
+        
+        .alert-title {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            color: var(--nydo-primary);
+            margin-bottom: 0.75rem;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        .alert-title .fa-solid {
+            font-size: 1.3em;
+        }
+
+        /* --- Footer --- */
+        .footer {
+            background-color: var(--nydo-surface);
+            border-top: 1px solid var(--nydo-border);
+            padding: 2.5rem;
+            margin-top: 4rem;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            box-shadow: 0 -4px 10px var(--nydo-shadow-medium);
+        }
+        
+        .footer .logo-footer {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+        
+        .footer .logo-footer img {
+            width: 45px;
+            height: 45px;
+            margin-right: 0.75rem;
+        }
+
+        .footer .logo-footer span {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: var(--nydo-primary);
+        }
+
+        .footer p.slogan {
             font-size: 1rem;
+            color: var(--nydo-text-secondary);
+            margin-bottom: 1.5rem;
+            max-width: 500px;
+        }
+
+        .footer p.copyright {
+            font-size: 0.9rem;
+            color: var(--nydo-text-secondary);
+        }
+
+        /* --- Responsive Adjustments --- */
+        @media (max-width: 768px) {
+            .main-content {
+                padding: 2rem 1.5rem;
+            }
+            h1 { font-size: 2.2rem; }
+            h2 { font-size: 1.8rem; }
+            h3 { font-size: 1.4rem; }
+            p, ul, ol, li { font-size: 0.95rem; }
+            .logo { font-size: 1.5rem; }
+            .sidebar { padding: 1.5rem; }
+            .nav-item { padding: 0.75rem 0.8rem; }
+            #content-container { padding: 2rem 1.5rem; }
         }
     </style>
 </head>
-<body class="antialiased text-lg">
+<body>
 
-    <!-- Header for Mobile -->
-    <header class="fixed top-0 left-0 w-full z-20 bg-[#121212] bg-opacity-90 backdrop-blur-sm p-4 shadow-lg md:hidden">
-        <div class="flex justify-between items-center">
-            <h1 class="text-2xl font-bold text-white">Nydo Docs</h1>
-            <button id="menu-btn" class="p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-white">
-                <i class="ri-menu-line text-2xl"></i>
-            </button>
-        </div>
-    </header>
+    <div class="layout">
+        <button class="menu-toggle" aria-label="Toggle Navigation Menu">
+            <i class="fa-solid fa-bars"></i>
+        </button>
 
-    <div class="flex flex-col md:flex-row min-h-screen pt-16 md:pt-0">
+        <aside class="sidebar">
+            <div class="logo">
+                <img src="nydo.png" alt="Nydo Logo"> Nydo Theme
+            </div>
+            <nav>
+                <div class="nav-section-title">Getting Started</div>
+                <a href="#introduction" class="nav-item"><i class="fa-solid fa-circle-info"></i>Introduction</a>
+                <a href="#installation" class="nav-item"><i class="fa-solid fa-download"></i>Installation</a>
+                <a href="#activation" class="nav-item"><i class="fa-solid fa-toggle-on"></i>Activation</a>
 
-        <!-- Sidebar Navigation -->
-        <aside id="sidebar" class="fixed inset-y-0 left-0 w-64 bg-[#1f1f1f] p-4 pt-20 md:pt-6 transform -translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out z-10 overflow-y-auto">
-            <h2 class="text-3xl font-bold mb-4 text-white">Documentation</h2>
-            <nav class="space-y-2 text-base">
-                <a href="#getting-started" class="nav-link flex items-center p-2 rounded-md hover:bg-[#333333] transition-colors duration-200 active">
-                    <i class="ri-file-text-line ri-xl mr-2"></i>
-                    Getting Started
-                </a>
-                <a href="#updates" class="nav-link flex items-center p-2 rounded-md hover:bg-[#333333] transition-colors duration-200">
-                    <i class="ri-loop-right-line ri-xl mr-2"></i>
-                    Updates
-                </a>
-                <a href="#changelogs" class="nav-link flex items-center p-2 rounded-md hover:bg-[#333333] transition-colors duration-200">
-                    <i class="ri-history-line ri-xl mr-2"></i>
-                    Changelogs
-                </a>
-                <a href="#about" class="nav-link flex items-center p-2 rounded-md hover:bg-[#333333] transition-colors duration-200">
-                    <i class="ri-information-line ri-xl mr-2"></i>
-                    About
-                </a>
-                <a href="#support" class="nav-link flex items-center p-2 rounded-md hover:bg-[#333333] transition-colors duration-200">
-                    <i class="ri-question-line ri-xl mr-2"></i>
-                    Support
-                </a>
+                <div class="nav-section-title">Reference</div>
+                <a href="#troubleshooting" class="nav-item"><i class="fa-solid fa-bug"></i>Troubleshooting</a>
+                <a href="#changelog" class="nav-item"><i class="fa-solid fa-list-check"></i>Changelog</a>
             </nav>
         </aside>
 
-        <!-- Main Content Area -->
-        <main class="flex-1 p-6 md:p-8 md:ml-64 overflow-y-auto">
-            <h1 class="text-2xl md:text-3xl font-extrabold mb-6 text-white">Nydo Theme Documentation</h1>
-            <p class="text-gray-300 mb-8 max-w-2xl text-lg">A comprehensive guide to installing and customizing the <span class="text-white">Paymenter Nydo</span> theme. This documentation covers everything from initial setup to advanced component customization.</p>
-
-            <!-- Getting Started Section -->
-            <section id="getting-started" class="content-section active">
-                <h2 class="text-2xl font-bold mb-3">Installation Instructions</h2>
-                <div class="bg-[#1f1f1f] p-6 rounded-lg shadow-xl space-y-6">
-                    <div class="space-y-6">
-                        <div class="font-medium text-lg">Step 1: Download the Template
-                            <p class="text-gray-400 text-base flex items-center">
-                                Get the template files (HTML, CSS, assets).
-                                <a href="https://builtbybit.com/resources/nydo-dark-modern-paymenter-theme.76596/" class="ml-2 inline-flex items-center text-white hover:text-gray-400 transition-colors duration-200" target="_blank">
-                                    <i class="ri-arrow-right-line"></i>
-                                </a>
-                            </p>
-                        </div>
-                        <div class="font-medium text-lg">Step 2: Locate Paymenter’s Themes Directory
-                            <p class="text-gray-400 text-base">Navigate to your Paymenter installation:</p>
-                            <div class="code-container my-4">
-                                <pre class="bg-[#333333] p-4 rounded-lg overflow-x-auto text-sm text-gray-200 code-block"><code>cd /var/www/paymenter/themes</code></pre>
-                                <button class="copy-btn">
-                                    <i class="ri-clipboard-line"></i>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="font-medium text-lg">Step 3: Upload Files
-                            <p class="text-gray-400 text-base">Upload the Nydo folder into the Paymenter theme folder.</p>
-                            <div class="note-box mt-4">
-                                <p class="font-bold text-gray-300">Note: You can use sftp like <a href="https://winscp.net/" class="winscp-link" target="_blank">WinSCP<i class="ri-external-link-line"></i></a> for uploading.</p>
-                            </div>
-                        </div>
-                        <div class="font-medium text-lg">Step 4: Build the Theme
-                            <p class="text-gray-400 text-base">Run the following commands to build the theme:</p>
-                            <div class="code-container my-4">
-                                <pre class="bg-[#333333] p-4 rounded-lg overflow-x-auto text-sm text-gray-200 code-block"><code>curl -fsSL https://deb.nodesource.com/setup_22.x | sudo bash -
-sudo apt install -y nodejs
-cd /var/www/paymenter
-npm install
-npm run build nydo</code></pre>
-                                <button class="copy-btn">
-                                    <i class="ri-clipboard-line"></i>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="font-medium text-lg">Step 5: Enable the Theme
-                            <p class="text-gray-400 text-base">In the Settings Page in your admin side, change the theme from default to nydo.</p>
-                        </div>
-                    </div>
-                    <hr class="border-gray-700">
-                    <div class="space-y-6">
-                        <h3 class="text-xl font-medium">Troubleshooting</h3>
-                        <ul class="list-disc list-inside text-gray-400 space-y-2">
-                            <li>Make sure you are using <b class="text-white">Node.js v20</b> or above.</li>
-                            <li>Check your terminal for missing dependencies or errors.</li>
-                            <li>Refer to the Nydo support channels if you encounter issues.</li>
-                        </ul>
-                    </div>
+        <main class="main-content">
+            <div id="content-container">
+            </div>
+            <footer class="footer">
+                <div class="logo-footer">
+                    <img src="nydo.png" alt="Nydo Logo">
+                    <span>Nydo Theme</span>
                 </div>
-            </section>
-
-            <!-- Updates Section -->
-            <section id="updates" class="content-section">
-                <h2 class="text-2xl font-bold mb-3">Updates</h2>
-                <p class="text-gray-400 text-lg">Coming soon!</p>
-            </section>
-            
-            <!-- Changelogs Section -->
-            <section id="changelogs" class="content-section">
-                <h2 class="text-2xl font-bold mb-3">Changelogs</h2>
-                <p class="text-gray-400 text-lg">Coming soon!</p>
-            </section>
-
-            <!-- About Section -->
-            <section id="about" class="content-section">
-                <div class="bg-[#1f1f1f] p-6 rounded-lg shadow-xl space-y-6">
-                    <h2 class="text-2xl font-bold mb-3 text-white">About the Nydo Theme</h2>
-                    <p class="text-gray-400 text-lg">The Nydo theme is a modern, minimalist dark theme for Paymenter, crafted with a focus on delivering a clean, fast, and highly intuitive user experience. We believe that a great interface should be elegant and effortless, allowing users to focus on what matters most without unnecessary distractions.</p>
-                    
-                    <hr class="border-gray-700">
-                    
-                    <div>
-                        <h3 class="text-xl font-bold text-white mb-4">Our Philosophy</h3>
-                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                            <div class="flex items-start">
-                                <i class="ri-sparkling-2-line ri-xl text-yellow-300 mr-3 mt-1"></i>
-                                <div class="space-y-1">
-                                    <h4 class="font-medium text-lg text-white">Cleanliness & Simplicity</h4>
-                                    <p class="text-gray-400 text-sm">Every element is thoughtfully designed to be clean and straightforward, reducing visual clutter and enhancing readability.</p>
-                                </div>
-                            </div>
-                            <div class="flex items-start">
-                                <i class="ri-rocket-line ri-xl text-blue-400 mr-3 mt-1"></i>
-                                <div class="space-y-1">
-                                    <h4 class="font-medium text-lg text-white">Performance</h4>
-                                    <p class="text-gray-400 text-sm">We've optimized every line of code to ensure the theme is lightweight and loads incredibly fast, providing a snappy experience for all users.</p>
-                                </div>
-                            </div>
-                            <div class="flex items-start">
-                                <i class="ri-user-heart-line ri-xl text-pink-400 mr-3 mt-1"></i>
-                                <div class="space-y-1">
-                                    <h4 class="font-medium text-lg text-white">User-Centric Design</h4>
-                                    <p class="text-gray-400 text-sm">The theme is built with the user in mind, featuring an intuitive layout and easy navigation to streamline common tasks.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <hr class="border-gray-700">
-                    
-                    <div>
-                        <h3 class="text-xl font-bold text-white mb-4">Meet the Developer</h3>
-                        <div class="flex items-center space-x-4">
-                            <i class="ri-code-s-slash-line text-5xl text-gray-400"></i>
-                            <div>
-                                <h4 class="text-white font-semibold text-xl">Blip-Theme Providing Platform</h4>
-                                <p class="text-gray-400 text-base max-w-xl">We are a dedicated team of developers and designers committed to creating high-quality themes that enhance the functionality and aesthetics of open-source platforms. Our goal is to provide beautiful, efficient, and well-documented themes that are easy to install and customize for everyone.</p>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </section>
-            
-            <!-- Support Section -->
-            <section id="support" class="content-section">
-                <h2 class="text-2xl font-bold mb-3">Support</h2>
-                <p class="text-gray-400 text-lg mb-6">For technical assistance or questions about the <span class="text-white">Nydo</span> theme, please use the following resources:</p>
-
-                <!-- Support Cards -->
-                <div id="support-cards" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    
-                    <!-- Discord Card -->
-                    <div class="bg-[#1f1f1f] p-6 rounded-lg shadow-xl flex flex-col items-center text-center transition-transform transform hover:scale-105">
-                        <i class="ri-discord-fill text-6xl text-white mb-4"></i>
-                        <h3 class="text-xl font-bold mb-2">Discord</h3>
-                        <p class="text-gray-400 text-base mb-4">Join our community for quick help, discussions, and real-time announcements.</p>
-                        <a href="https://discord.gg/szk2aWGh" class="inline-flex items-center text-white font-medium hover:underline" target="_blank">
-                            Join Community <i class="ri-arrow-right-line ml-1"></i>
-                        </a>
-                    </div>
-                    
-                    <!-- Support Ticket Card -->
-                    <div class="bg-[#1f1f1f] p-6 rounded-lg shadow-xl flex flex-col items-center text-center transition-transform transform hover:scale-105">
-                        <i class="ri-file-list-3-line text-6xl text-white mb-4"></i>
-                        <h3 class="text-xl font-bold mb-2">Support Form</h3>
-                        <p class="text-gray-400 text-base mb-4">For any assistance and help please fill out the form and mail us!</p>
-                        <button id="open-ticket-btn" class="inline-flex items-center text-white font-medium hover:underline">
-                            Open Ticket <i class="ri-arrow-right-line ml-1"></i>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Support Ticket Form (Initially hidden) -->
-                <div id="support-form-container" class="hidden bg-[#1f1f1f] p-6 rounded-lg shadow-xl space-y-6">
-                    <button id="back-to-support-btn" class="text-gray-400 hover:text-white transition-colors duration-200">
-                        <i class="ri-arrow-left-line mr-2"></i>Back to Support
-                    </button>
-                    <h3 class="text-xl font-bold">Submit a Support Ticket</h3>
-                    <p class="text-gray-400 text-lg">To open a new support ticket, please provide details about your issue. For the best assistance, please include your license key, a detailed description of the problem, and any relevant error messages or screenshots.</p>
-                    <form id="support-form" action="https://formsubmit.co/mehmoodali.1337@gmail.com" method="POST" class="space-y-4">
-                        <input type="hidden" name="_subject" value="New Support Ticket from Nydo Docs">
-                        <input type="hidden" name="_captcha" value="false">
-                        <div>
-                            <label for="name" class="block text-gray-300 mb-1">Name</label>
-                            <input type="text" id="name" name="name" class="w-full p-3 rounded-md bg-[#333333] border border-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500 text-white" required>
-                        </div>
-                        <div>
-                            <label for="email" class="block text-gray-300 mb-1">Email</label>
-                            <input type="email" id="email" name="email" class="w-full p-3 rounded-md bg-[#333333] border border-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500 text-white" required>
-                        </div>
-                        <div>
-                            <label for="message" class="block text-gray-300 mb-1">Message</label>
-                            <textarea id="message" name="message" rows="6" class="w-full p-3 rounded-md bg-[#333333] border border-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500 text-white" required></textarea>
-                        </div>
-                        <button type="submit" class="w-full p-3 rounded-md bg-white text-black font-bold hover:bg-gray-200 transition-colors duration-200">
-                            Submit Ticket
-                        </button>
-                    </form>
-                </div>
-            </section>
+                <p class="slogan">Crafting a seamless and visually stunning experience for Paymenter.</p>
+                <p class="copyright">© 2024 Nydo. All Rights Reserved.</p>
+            </footer>
         </main>
     </div>
 
-    <!-- Custom alert/message box -->
-    <div id="alert-box" class="fixed bottom-4 left-1/2 -translate-x-1/2 p-4 rounded-lg shadow-lg z-50 text-center transition-all duration-300 transform scale-0 opacity-0 bg-white text-black">
-        Code copied to clipboard!
-    </div>
-    
     <script>
-        // Mobile menu toggle
-        const menuBtn = document.getElementById('menu-btn');
-        const sidebar = document.getElementById('sidebar');
+        // --- Documentation Content as JavaScript Objects ---
+        const docsContent = {
+            'introduction': `
+                <h1>Introduction to the Nydo Theme for Paymenter</h1>
+                <p>Welcome to the official documentation for the **Nydo** theme, a custom-built, modern, and high-performance theme designed exclusively for Paymenter. Nydo transforms your billing platform with a sleek, dark aesthetic and a user-centric design approach, offering a professional and immersive experience for your clients.</p>
+                <p>Nydo is meticulously crafted to be more than just a visual skin; it's a comprehensive front-end overhaul. It leverages modern web development practices to improve navigation, showcase products with elegant displays, and ensure a seamless user journey from browsing to billing.</p>
+                
+                <h3>Key Features:</h3>
+                <ul>
+                    <li><i class="fa-solid fa-palette" style="color: var(--nydo-primary);"></i> **Energetic Dark Aesthetic:** A vibrant dark-blue palette that's easy on the eyes, yet impactful.</li>
+                    <li><i class="fa-solid fa-rocket" style="color: var(--nydo-primary);"></i> **Optimized Performance:** Clean code and efficient asset management for fast loading times.</li>
+                    <li><i class="fa-solid fa-mobile-screen-button" style="color: var(--nydo-primary);"></i> **Fully Responsive:** Flawless experience across desktops, tablets, and mobile devices.</li>
+                    <li><i class="fa-solid fa-screwdriver-wrench" style="color: var(--nydo-primary);"></i> **Highly Customizable:** Easy-to-understand configuration for colors, fonts, and components.</li>
+                    <li><i class="fa-solid fa-star" style="color: var(--nydo-primary);"></i> **Enhanced UX:** Intuitive navigation and polished interactive elements.</li>
+                </ul>
 
-        menuBtn.addEventListener('click', () => {
-            sidebar.classList.toggle('-translate-x-full');
-        });
+                <div class="alert">
+                    <div class="alert-title"><i class="fa-solid fa-circle-exclamation"></i> Important Note:</div>
+                    <p>This documentation assumes a foundational understanding of Paymenter's architecture and the Laravel Blade templating engine. For core Paymenter concepts, please refer to the <a href="https://paymenter.org/docs" target="_blank">official Paymenter documentation</a>.</p>
+                </div>
+            `,
+            'installation': `
+                <h2><i class="fa-solid fa-download"></i> Installation Instructions</h2>
+                <p>To install the Nydo theme, follow these straightforward steps to get the files in the right place and build the necessary assets.</p>
+                
+                <h3>Step 1: Download the Template</h3>
+                <p>First, obtain the template files (HTML, CSS, assets) for the Nydo theme.</p>
 
-        // Handle navigation clicks to show/hide sections
-        const navLinks = document.querySelectorAll('.nav-link');
-        const contentSections = document.querySelectorAll('.content-section');
+                <h3>Step 2: Locate Paymenter's Themes Directory</h3>
+                <p>Using your terminal, navigate to your Paymenter installation's themes directory:</p>
+                <pre><code class="language-bash">cd /var/www/paymenter/themes</code></pre>
 
-        navLinks.forEach(link => {
-            link.addEventListener('click', function(e) {
-                e.preventDefault();
-                const targetId = this.getAttribute('href').substring(1);
+                <h3>Step 3: Upload Files</h3>
+                <p>Upload the entire **Nydo** folder, which contains the theme files, into the Paymenter theme folder you located in the previous step.</p>
+                <div class="alert">
+                    <div class="alert-title"><i class="fa-solid fa-circle-exclamation"></i> Note:</div>
+                    <p>You can use a secure file transfer protocol (SFTP) client like <strong>WinSCP</strong> or <strong>FileZilla</strong> for this process.</p>
+                </div>
+                
+                <h3>Step 4: Build the Theme</h3>
+                <p>From the root directory of your Paymenter installation, run the following commands to install the necessary dependencies and build the theme's assets:</p>
+                <pre><code class="language-bash"># Optional: Install Node.js if it's not already on your server
+curl -fsSL https://deb.nodesource.com/setup_22.x | sudo bash -
+sudo apt install -y nodejs
 
-                // Close mobile menu on click
-                if (window.innerWidth < 768) {
-                    sidebar.classList.add('-translate-x-full');
+# Install NPM dependencies and build the Nydo theme
+cd /var/www/paymenter
+npm install
+npm run build nydo</code></pre>
+            `,
+            'activation': `
+                <h2><i class="fa-solid fa-toggle-on"></i> Activation</h2>
+                <p>Once the theme files are in place and built, you must activate the theme from the Paymenter admin panel.</p>
+                <ol>
+                    <li>Log in to your Paymenter admin dashboard.</li>
+                    <li>Navigate to the **Admin &rarr; Settings** section.</li>
+                    <li>Look for the **"Theme"** setting there.</li>
+                    <li>Select **"Nydo"** from the list of available themes.</li>
+                    <li>Click **"Save Changes"** to apply the new theme.</li>
+                </ol>
+                <p>Your Paymenter installation is now using the Nydo theme! You may need to clear your browser's cache to see the changes immediately.</p>
+            `,
+            'troubleshooting': `
+                <h2><i class="fa-solid fa-bug"></i> Troubleshooting</h2>
+                <p>If you encounter any issues during installation or usage, check these common solutions.</p>
+                <ul>
+                    <li><i class="fa-solid fa-circle-check" style="color: var(--nydo-primary);"></i> **Node.js Version:** Make sure you are using **Node.js v20** or above. You can check the version by running \`node -v\` in your terminal.</li>
+                    <li><i class="fa-solid fa-circle-check" style="color: var(--nydo-primary);"></i> **Terminal Errors:** Carefully check your terminal output for any missing dependencies or errors when running the \`npm install\` and \`npm run build\` commands.</li>
+                    <li><i class="fa-solid fa-circle-check" style="color: var(--nydo-primary);"></i> **Nydo Support:** If the problem persists, please refer to the Nydo support channels for further assistance.</li>
+                </ul>
+
+                <div class="alert">
+                    <div class="alert-title"><i class="fa-solid fa-question-circle"></i> Need more help?</div>
+                    <p>If you've exhausted these solutions, consider reaching out to the <a href="https://paymenter.org/discord" target="_blank">Paymenter Discord community</a> or opening an issue on the <a href="https://github.com/your-username/nydo-theme/issues" target="_blank">Nydo Theme GitHub repository</a>.</p>
+                </div>
+            `,
+            'changelog': `
+                <h2><i class="fa-solid fa-list-check"></i> Changelog</h2>
+                <div class="alert">
+                    <div class="alert-title"><i class="fa-solid fa-file-lines"></i> No Changelogs Available Yet</div>
+                    <p>This is a new theme version. Please check back later for updates and a detailed changelog.</p>
+                </div>
+            `
+        };
+
+        // --- SPA Routing & Mobile Menu Logic ---
+        const contentContainer = document.getElementById('content-container');
+        const navLinks = document.querySelectorAll('.nav-item');
+        const sidebar = document.querySelector('.sidebar');
+        const mainContent = document.querySelector('.main-content');
+        const menuToggle = document.querySelector('.menu-toggle');
+
+        const handleRoute = () => {
+            const hash = window.location.hash.substring(1);
+            const path = hash || 'introduction';
+            
+            const content = docsContent[path] || `
+                <div class="alert" style="border-left-color: #f56565; background-color: rgba(245, 101, 101, 0.12);">
+                    <div class="alert-title" style="color: #f56565;"><i class="fa-solid fa-bomb"></i> 404 Not Found</div>
+                    <p>The documentation page you are looking for does not exist. Please check the URL or use the navigation sidebar.</p>
+                    <p>Return to <a href="#introduction">Introduction</a>.</p>
+                </div>
+            `;
+            
+            contentContainer.innerHTML = content;
+            
+            document.querySelectorAll('pre').forEach(preBlock => {
+                const code = preBlock.querySelector('code');
+                if (code) {
+                    const button = document.createElement('button');
+                    button.classList.add('copy-btn');
+                    button.innerHTML = '<i class="fa-solid fa-copy"></i> Copy';
+                    button.addEventListener('click', async () => {
+                        try {
+                            await navigator.clipboard.writeText(code.textContent);
+                            button.innerHTML = '<i class="fa-solid fa-check"></i> Copied!';
+                            button.classList.add('copied');
+                            setTimeout(() => {
+                                button.innerHTML = '<i class="fa-solid fa-copy"></i> Copy';
+                                button.classList.remove('copied');
+                            }, 2000);
+                        } catch (err) {
+                            console.error('Failed to copy text: ', err);
+                            button.innerHTML = '<i class="fa-solid fa-xmark"></i> Failed';
+                        }
+                    });
+                    preBlock.appendChild(button);
                 }
+            });
 
-                // Hide all sections and remove active class from all links
-                contentSections.forEach(section => {
-                    section.classList.remove('active');
-                });
-                navLinks.forEach(navLink => {
-                    navLink.classList.remove('active');
-                });
-
-                // Show the target section and add active class to the clicked link
-                const targetSection = document.getElementById(targetId);
-                if (targetSection) {
-                    targetSection.classList.add('active');
-                    this.classList.add('active');
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${path}`) {
+                    link.classList.add('active');
                 }
             });
+            
+            if (window.innerWidth <= 1024) {
+                sidebar.classList.remove('open');
+                mainContent.classList.remove('dimmed');
+            }
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+        
+        menuToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('open');
+            mainContent.classList.toggle('dimmed');
+        });
+        
+        mainContent.addEventListener('click', () => {
+             if (sidebar.classList.contains('open')) {
+                sidebar.classList.remove('open');
+                mainContent.classList.remove('dimmed');
+             }
         });
 
-        // Function to copy code to clipboard and show an alert
-        function copyToClipboard(text) {
-            const tempInput = document.createElement('textarea');
-            tempInput.value = text;
-            document.body.appendChild(tempInput);
-            tempInput.select();
-            document.execCommand('copy');
-            document.body.removeChild(tempInput);
-
-            const alertBox = document.getElementById('alert-box');
-            alertBox.classList.add('scale-100', 'opacity-100');
-            setTimeout(() => {
-                alertBox.classList.remove('scale-100', 'opacity-100');
-            }, 2000);
-        }
-
-        // Add event listeners to all copy buttons
-        document.querySelectorAll('.copy-btn').forEach(button => {
-            button.addEventListener('click', () => {
-                const codeBlock = button.previousElementSibling;
-                if (codeBlock) {
-                    copyToClipboard(codeBlock.textContent.trim());
-                }
-            });
-        });
-
-        // Support section interactivity
-        const openTicketBtn = document.getElementById('open-ticket-btn');
-        const backToSupportBtn = document.getElementById('back-to-support-btn');
-        const supportCards = document.getElementById('support-cards');
-        const supportFormContainer = document.getElementById('support-form-container');
-
-        if (openTicketBtn && supportCards && supportFormContainer) {
-            openTicketBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                supportCards.classList.add('hidden');
-                supportFormContainer.classList.remove('hidden');
-            });
-        }
-
-        if (backToSupportBtn && supportCards && supportFormContainer) {
-            backToSupportBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                supportFormContainer.classList.add('hidden');
-                supportCards.classList.remove('hidden');
-            });
-        }
-
-        // Initialize the page by showing the first section
-        document.addEventListener('DOMContentLoaded', () => {
-            document.querySelector('.nav-link.active').click();
-        });
+        window.addEventListener('hashchange', handleRoute);
+        document.addEventListener('DOMContentLoaded', handleRoute);
     </script>
+
 </body>
 </html>
